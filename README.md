@@ -1,0 +1,1 @@
+a personal starter kit to develop client component with appstackr

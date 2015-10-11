@@ -1,0 +1,133 @@
+#!/usr/bin/env node
+
+var os = require('os');
+var eol = os.EOL;
+var fs = require('fs');
+var path = require('path');
+var basename = path.basename;
+var join = path.join;
+
+var program = require('commander');
+var colors = require('colors');
+var async = require('async');
+var sortedObject = require('sorted-object');
+var utils = require('../lib');
+var emptyDir = utils.emptyDirectory;
+var confirm = utils.confirm;
+var componentName = utils.componentName;
+var loadTemplate = utils.loadTemplate;
+var complete = utils.complete;
+var writefile = utils.write;
+var pkg = require('../package.json');
+var version = pkg.version;
+
+
+program
+  .version(version)
+  .option('-f, --force', 'force on non-empty directory')
+  .parse(process.argv);
+
+main();
+
+function main() {
+
+  var dest = program.args.shift() || '.';
+  var appname = basename(path.resolve(dest));
+  var createComponent = async.seq(componentName, createApplication.bind(null, appname, dest));
+
+  emptyDir(dest, function(empty) {
+    if (empty || program.force) {
+      createComponent('component name? '.cyan, complete);
+    } else {
+      confirm('destination is not empty, continue? [y|N] '.cyan, function(err, ok) {
+        if (ok) {
+          process.stdin.destroy();
+          createComponent('component name? '.cyan, complete);
+        } else {
+          console.error('aborting'.cyan);
+          utils.exit(1);
+        }
+      });
+    }
+  });
+}
+
+function createApplication(appname, path, component_name, callback) {
+
+  component_name = component_name || utils.toCamelCase(appname);
+
+  var component_name_lowercase = utils.toLowerCase(component_name);
+
+  /**
+   * load template files
+   */
+
+  // component
+  var entry = loadTemplate(join('component', 'entry.js'));
+  entry = utils.replace(entry, '{component_name_lowercase}', component_name_lowercase);
+
+  var lib = loadTemplate(join('component', 'component.jsx'));
+  lib = utils.replace(lib, '{component_name}', component_name);
+  lib = utils.replace(lib, '{component_name_lowercase}', component_name_lowercase);
+
+  var styleJS = loadTemplate(join('component', 'style', 'styles.js'));
+  var styleSCSS = loadTemplate(join('component', 'style', 'style.scss'));
+  styleSCSS = utils.replace(styleSCSS, '{component_name_lowercase}', component_name_lowercase);
+
+  // top level files
+  var gitignore = loadTemplate('gitignore');
+  var npmignore = loadTemplate('npmignore');
+  var stacks = loadTemplate('stacks.js');
+  stacks = utils.replace(stacks, '{component_name_lowercase}', component_name_lowercase);
+
+  var appstackSettings = loadTemplate('appstackr-settings.json');
+
+  // example files
+  var exampleHtml = loadTemplate(join('examples', 'example.html'));
+  exampleHtml = utils.replace(exampleHtml, '{component_name_lowercase}', component_name_lowercase);
+  var exampleSCSS = loadTemplate(join('examples', 'example.scss'));
+  var exampleJS = loadTemplate(join('examples', 'example.jsx'));
+  exampleJS = utils.replace(exampleJS, '{component_name}', component_name);
+
+  var pkg = {
+    name: appname,
+    version: '0.1.0',
+    scripts: {
+      appstack: 'appstack',
+      bsync: 'appwatch -b'
+    },
+    dependencies: {
+      'inject-css': '^0.1.1',
+      'react': '^0.13.3',
+      'react-style-prefix': '^0.2.0',
+      'transforms': '^0.1.1'
+    },
+    devDependencies: {
+      appstackr: '^0.3.15'
+    },
+    browserify: {
+      transform: ['transforms']
+    }
+  };
+
+  pkg.dependencies = sortedObject(pkg.dependencies);
+  pkg.devDependencies = sortedObject(pkg.devDependencies);
+
+  writefile(join(path, 'package.json'), JSON.stringify(pkg, null, 2));
+  writefile(join(path, 'index.js'), entry);
+  writefile(join(path, 'lib', component_name_lowercase + '.jsx'), lib);
+  writefile(join(path, 'lib', 'style', 'styles.js'), styleJS);
+  writefile(join(path, 'lib', 'style', 'style.scss'), styleSCSS);
+  writefile(join(path, '.gitignore'), gitignore);
+  writefile(join(path, '.npmignore'), npmignore);
+  writefile(join(path, 'stacks.js'), stacks);
+  writefile(join(path, 'appstackr-settings.json'), appstackSettings);
+  writefile(join(path, 'examples', 'index.html'), exampleHtml);
+  writefile(join(path, 'examples', 'src',  component_name_lowercase + '.jsx'), exampleJS);
+  writefile(join(path, 'examples', 'src', 'example.scss'), exampleSCSS);
+
+  callback(null, path);
+}
+
+
+
