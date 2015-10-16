@@ -14,7 +14,7 @@
     "url": "https://github.com/benpptung/appstackr-client-generator.git"
   },
   "author": "Ben P.P. Tung",
-  "license": "MIG",
+  "license": "MIT",
   "dependencies": {
     "async": "^1.4.2",
     "colors": "^1.1.2",
