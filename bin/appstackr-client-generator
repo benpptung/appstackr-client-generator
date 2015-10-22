@@ -100,10 +100,10 @@ function createApplication(appname, path, component_name, callback) {
       'inject-css': '^0.1.1',
       'react': '^0.13.3',
       'react-style-prefix': '^0.2.0',
-      'transforms': '^0.1.1'
+      'transforms': '^0.1.2'
     },
     devDependencies: {
-      appstackr: '^0.3.15'
+      appstackr: '^0.3.16'
     },
     browserify: {
       transform: ['transforms']
