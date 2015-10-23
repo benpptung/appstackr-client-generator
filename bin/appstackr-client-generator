@@ -72,6 +72,7 @@ function createApplication(appname, path, component_name, callback) {
 
   var styleJS = loadTemplate(join('component', 'style', 'styles.js'));
   var styleSCSS = loadTemplate(join('component', 'style', 'style.scss'));
+  var images = loadTemplate(join('component', 'style', 'images.files'));
   styleSCSS = utils.replace(styleSCSS, '{component_name_lowercase}', component_name_lowercase);
 
   // top level files
@@ -118,6 +119,7 @@ function createApplication(appname, path, component_name, callback) {
   writefile(join(path, 'lib', component_name_lowercase + '.jsx'), lib);
   writefile(join(path, 'lib', 'style', 'styles.js'), styleJS);
   writefile(join(path, 'lib', 'style', 'style.scss'), styleSCSS);
+  writefile(join(path, 'lib', 'style', 'images.files'), images);
   writefile(join(path, '.gitignore'), gitignore);
   writefile(join(path, '.npmignore'), npmignore);
   writefile(join(path, 'stacks.js'), stacks);
