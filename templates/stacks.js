@@ -2,9 +2,12 @@ module.exports = [
   {
     name: 'react',
     nature: 'js',
-    files: 'node_modules/react/dist/react-with-addons.js',
+    files: [
+      'node_modules/react/dist/react-with-addons.js',
+      'react-dom'
+    ],
     browserify: {
-      exposes: 'react-with-addons.js:react'
+      exposes: 'react-with-addons.js:react, react-dom'
     }
   },
   {

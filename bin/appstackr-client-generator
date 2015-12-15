@@ -99,9 +99,10 @@ function createApplication(appname, path, component_name, callback) {
     },
     dependencies: {
       'inject-css': '^0.1.1',
-      'react': '^0.13.3',
+      'react': '^0.14.3',
       'react-style-prefix': '^0.2.0',
-      'transforms': '^0.1.2'
+      'transforms': '^0.1.2',
+      'react-dom': 'benpptung/react-dom-temp.git'
     },
     devDependencies: {
       appstackr: '^0.3.16'
