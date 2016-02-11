@@ -3,4 +3,23 @@
   *, *:before, *:after {
     box-sizing: border-box;
   }
+
+  text-align: center;
+  color: whitesmoke;
+
+  .footer {
+    font-size: 0.9em;
+    color: #CCCCCC;
+
+    $link-color: #2d47d0;
+
+    a {
+      text-decoration: none;
+      color: $link-color;
+
+      &:hover, &:focus, &:active {
+        border-bottom: 3px solid $link-color;
+      }
+    }
+  }
 }

@@ -1,6 +1,6 @@
 {
   "type" : "files-mapping",
   "list" : {
-
+    "./img/img.png": "clipart/img.png"
   }
 }

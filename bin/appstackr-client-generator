@@ -16,6 +16,7 @@ var emptyDir = utils.emptyDirectory;
 var confirm = utils.confirm;
 var componentName = utils.componentName;
 var loadTemplate = utils.loadTemplate;
+var loadFile = utils.loadFile;
 var complete = utils.complete;
 var writefile = utils.write;
 var pkg = require('../package.json');
@@ -37,12 +38,12 @@ function main() {
 
   emptyDir(dest, function(empty) {
     if (empty || program.force) {
-      createComponent('component name? '.cyan, complete);
+      createComponent('component name(optional)? '.cyan, complete);
     } else {
       confirm('destination is not empty, continue? [y|N] '.cyan, function(err, ok) {
         if (ok) {
           process.stdin.destroy();
-          createComponent('component name? '.cyan, complete);
+          createComponent('component name(optional)? '.cyan, complete);
         } else {
           console.error('aborting'.cyan);
           utils.exit(1);
@@ -73,6 +74,7 @@ function createApplication(appname, path, component_name, callback) {
   var styleJS = loadTemplate(join('component', 'style', 'styles.js'));
   var styleSCSS = loadTemplate(join('component', 'style', 'style.scss'));
   var images = loadTemplate(join('component', 'style', 'images.files'));
+  var img = loadFile(join('component', 'style', 'vacation.png'));
   styleSCSS = utils.replace(styleSCSS, '{component_name_lowercase}', component_name_lowercase);
 
   // top level files
@@ -99,10 +101,18 @@ function createApplication(appname, path, component_name, callback) {
     },
     dependencies: {
       'inject-css': '^0.1.1',
-      'react': '^0.14.3',
+      'react': '^0.14.7',
       'react-style-prefix': '^0.2.0',
       'transforms': '^0.1.2',
-      'react-dom': 'benpptung/react-dom-temp.git'
+      'react-dom': 'benpptung/react-dom',
+      'react-addons-css-transition-group': 'benpptung/react-addons-css-transition-group',
+      'react-addons-update': 'benpptung/react-addons-update',
+      'react-addons-transition-group': 'benpptung/react-addons-transition-group',
+      'react-addons-shallow-compare': 'benpptung/react-addons-shallow-compare',
+      'react-addons-pure-render-mixin': 'benpptung/react-addons-pure-render-mixin',
+      'react-addons-linked-state-mixin': 'benpptung/react-addons-linked-state-mixin',
+      'react-addons-clone-with-props': 'benpptung/react-addons-clone-with-props',
+      'react-addons-create-fragment': 'benpptung/react-addons-create-fragment'
     },
     devDependencies: {
       appstackr: '^0.3.16'
@@ -121,6 +131,7 @@ function createApplication(appname, path, component_name, callback) {
   writefile(join(path, 'lib', 'style', 'styles.js'), styleJS);
   writefile(join(path, 'lib', 'style', 'style.scss'), styleSCSS);
   writefile(join(path, 'lib', 'style', 'images.files'), images);
+  writefile(join(path, 'lib', 'style', 'img', 'img.png'), img);
   writefile(join(path, '.gitignore'), gitignore);
   writefile(join(path, '.npmignore'), npmignore);
   writefile(join(path, 'stacks.js'), stacks);
