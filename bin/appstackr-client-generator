@@ -38,12 +38,12 @@ function main() {
 
   emptyDir(dest, function(empty) {
     if (empty || program.force) {
-      createComponent('component name(optional)? '.cyan, complete);
+      createComponent('What is the component name (optional)? '.cyan, complete);
     } else {
       confirm('destination is not empty, continue? [y|N] '.cyan, function(err, ok) {
         if (ok) {
-          process.stdin.destroy();
-          createComponent('component name(optional)? '.cyan, complete);
+          //process.stdin.destroy();
+          createComponent('What is the component name (optional)? '.cyan, complete);
         } else {
           console.error('aborting'.cyan);
           utils.exit(1);
@@ -64,8 +64,8 @@ function createApplication(appname, path, component_name, callback) {
    */
 
   // component
-  var entry = loadTemplate(join('component', 'rendering.js'));
-  entry = utils.replace(entry, '{component_name_lowercase}', component_name_lowercase);
+  var rendering = loadTemplate(join('component', 'rendering.js'));
+  rendering = utils.replace(rendering, '{component_name}', component_name);
 
   var lib_index = loadTemplate(join('index.js'));
   var component_index = loadTemplate(join('component', 'index.js'));
@@ -94,6 +94,9 @@ function createApplication(appname, path, component_name, callback) {
   var exampleHtml = loadTemplate(join('examples', 'index.html'));
   exampleHtml = utils.replace(exampleHtml, '{component_name_lowercase}', component_name_lowercase);
 
+  // react adapter
+  var react_lib = loadTemplate(join('site', 'react.js'));
+  var react_dom_lib = loadTemplate(join('site', 'react-dom.js'));
 
   var pkg = {
     name: appname,
@@ -103,7 +106,7 @@ function createApplication(appname, path, component_name, callback) {
       bsync: 'appwatch -b'
     },
     dependencies: {
-      'caniuse-api': '^2.0.0',
+      'caniuse-api': '^1.5.2',
       'inherits': '^2.0.3',
       'inject-css': '^0.1.1',
       'material-ui': '^0.18.1',
@@ -115,7 +118,7 @@ function createApplication(appname, path, component_name, callback) {
       'react-addons-pure-render-mixin': 'benpptung/react-addons-pure-render-mixin',
       'react-addons-linked-state-mixin': 'benpptung/react-addons-linked-state-mixin',
       'react-addons-clone-with-props': 'benpptung/react-addons-clone-with-props',
-      'react-addons-create-fragment': 'benpptung/react-addons-create-fragment'
+      'react-addons-create-fragment': 'benpptung/react-addons-create-fragment',
       'react-dom': '^15.5.4',
       'react-style-prefix': '^0.2.0',
       "react-tap-event-plugin": "^2.0.1",
@@ -133,7 +136,7 @@ function createApplication(appname, path, component_name, callback) {
   pkg.devDependencies = sortedObject(pkg.devDependencies);
 
   writefile(join(path, 'package.json'), JSON.stringify(pkg, null, 2));
-  writefile(join(path, 'rendering.js'), entry);
+  writefile(join(path, 'rendering.js'), rendering);
   writefile(join(path, 'index.js'), lib_index)
   writefile(join(path, 'lib', 'index.js'), component_index);
   writefile(join(path, 'lib', 'prototype', 'index.js'), lib_proto);
@@ -144,9 +147,12 @@ function createApplication(appname, path, component_name, callback) {
   writefile(join(path, 'lib', 'style', 'img', 'img.png'), img);
   writefile(join(path, '.gitignore'), gitignore);
   writefile(join(path, '.npmignore'), npmignore);
+  writefile(join(path, '.jshintrc'), jshintrc);
   writefile(join(path, 'stacks.js'), stacks);
   writefile(join(path, 'appstackr-settings.json'), appstackSettings);
   writefile(join(path, 'examples', 'index.html'), exampleHtml);
+  writefile(join(path, 'site', 'react.js'), react_lib);
+  writefile(join(path, 'site', 'react-dom.js'), react_dom_lib);
 
   callback(null, path);
 }

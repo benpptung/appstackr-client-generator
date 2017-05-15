@@ -1,6 +1,6 @@
 {
   "name": "appstackr-client-generator",
-  "version": "1.0.4",
+  "version": "1.1",
   "description": "",
   "preferGlobal": true,
   "scripts": {
@@ -13,6 +13,7 @@
     "type": "git",
     "url": "https://github.com/benpptung/appstackr-client-generator.git"
   },
+  "keywords": ["react", "appstackr", "generator", "client"],
   "author": "Ben P.P. Tung",
   "license": "MIT",
   "dependencies": {

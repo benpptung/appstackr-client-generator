@@ -5,21 +5,21 @@
   }
 
   text-align: center;
-  color: whitesmoke;
+  color: #458189;
+
+  $link-color: #a12bff;
+
+  a {
+    text-decoration: none;
+    color: $link-color;
+
+    &:hover, &:focus, &:active {
+      border-bottom: 3px solid $link-color;
+    }
+  }
 
   .footer {
     font-size: 0.9em;
     color: #CCCCCC;
-
-    $link-color: #2d47d0;
-
-    a {
-      text-decoration: none;
-      color: $link-color;
-
-      &:hover, &:focus, &:active {
-        border-bottom: 3px solid $link-color;
-      }
-    }
   }
 }

@@ -48,5 +48,5 @@ npm install example --save-dev
 var Example = require('example');
 ```
 
-If any module missed, check `package.json` or `stacks.js` to figure out the dependencies
-    
+In appstackr server project, this module can copy images to public image directory,
+check `lib/style/images.files`    
