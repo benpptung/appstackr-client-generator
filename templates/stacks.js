@@ -3,21 +3,14 @@ module.exports = [
     name: 'react',
     nature: 'js',
     files: [
-      'node_modules/react/dist/react-with-addons.js',
-      'react-dom'
+      'site/react.js',
+      'site/react-dom.js'
     ],
     browserify: {
       // Cannot use `*` here, because `*` automatically expose npm module name.
-      // In this stack, we expose react/dist/react-with-addons.js as react
-      exposes: 'react-with-addons.js:react, react-dom'
+      // In this stack, we have to do some tricks to build react
+      exposes: 'react.js:react, react-dom.js:react-dom'
     }
-  },
-  {
-    name: 'bundle',
-    nature: 'css',
-    files: [
-      'examples/src/example.scss'
-    ]
   },
   {
     name: 'bundle',
@@ -25,9 +18,11 @@ module.exports = [
     files: [
       'inject-css',
       'react-style-prefix',
+      'inherits',
 
-      // remove the following Add-Ons, if this component doesn't need them
-
+      // following React Add-Ons do not have internal dependency to React,
+      // so no more multiple React copies loaded error.
+      // Remove the followings, if they are extraneous
       'react-addons-css-transition-group',
       'react-addons-update',
       'react-addons-transition-group',
@@ -35,20 +30,27 @@ module.exports = [
       'react-addons-pure-render-mixin',
       'react-addons-linked-state-mixin',
       'react-addons-clone-with-props',
-      'react-addons-create-fragment'
+      'react-addons-create-fragment',
+
+      // add needed material-ui components here
+      'material-ui/styles/MuiThemeProvider',
+      'material-ui/styles/getMuiTheme'
     ],
     browserify: {
-      exposes: '*' , externals: 'react'
+      exposes: '*' , externals: ['react', 'react-dom']
     }
   },
   {
     name: '{component_name_lowercase}',
     nature: 'js',
-    files: 'examples/src/{component_name_lowercase}.jsx',
-    watch: 'index.js, lib/**/*.*',
+    files: 'rendering.js',
+    watch: 'rendering.js, lib/**/*.*',
     browserify: {
       // add React Add-Ons, if this component needs them
-      externals: 'react, inject-css, react-style-prefix'
+      externals: ['react', 'react-dom', 'inject-css', 'react-style-prefix', 'inherits',
+        'material-ui/styles/MuiThemeProvider',
+        'material-ui/styles/getMuiTheme'
+      ]
     }
   }
 ];

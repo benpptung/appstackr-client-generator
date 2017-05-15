@@ -64,12 +64,16 @@ function createApplication(appname, path, component_name, callback) {
    */
 
   // component
-  var entry = loadTemplate(join('component', 'entry.js'));
+  var entry = loadTemplate(join('component', 'rendering.js'));
   entry = utils.replace(entry, '{component_name_lowercase}', component_name_lowercase);
 
-  var lib = loadTemplate(join('component', 'component.jsx'));
-  lib = utils.replace(lib, '{component_name}', component_name);
-  lib = utils.replace(lib, '{component_name_lowercase}', component_name_lowercase);
+  var lib_index = loadTemplate(join('index.js'));
+  var component_index = loadTemplate(join('component', 'index.js'));
+  component_index = utils.replace(component_index, '{component_name}', component_name);
+  component_index = utils.replace(component_index, '{component_name_lowercase}', component_name_lowercase);
+
+  var lib_proto = loadTemplate(join('component', 'prototype', 'index.js'));
+  var lib_life_cycle = loadTemplate(join('component', 'prototype', 'life-cycle.js'));
 
   var styleJS = loadTemplate(join('component', 'style', 'styles.js'));
   var styleSCSS = loadTemplate(join('component', 'style', 'style.scss'));
@@ -80,17 +84,16 @@ function createApplication(appname, path, component_name, callback) {
   // top level files
   var gitignore = loadTemplate('gitignore');
   var npmignore = loadTemplate('npmignore');
+  var jshintrc = loadTemplate('jshintrc');
   var stacks = loadTemplate('stacks.js');
   stacks = utils.replace(stacks, '{component_name_lowercase}', component_name_lowercase);
 
   var appstackSettings = loadTemplate('appstackr-settings.json');
 
   // example files
-  var exampleHtml = loadTemplate(join('examples', 'example.html'));
+  var exampleHtml = loadTemplate(join('examples', 'index.html'));
   exampleHtml = utils.replace(exampleHtml, '{component_name_lowercase}', component_name_lowercase);
-  var exampleSCSS = loadTemplate(join('examples', 'example.scss'));
-  var exampleJS = loadTemplate(join('examples', 'example.jsx'));
-  exampleJS = utils.replace(exampleJS, '{component_name}', component_name);
+
 
   var pkg = {
     name: appname,
@@ -100,11 +103,11 @@ function createApplication(appname, path, component_name, callback) {
       bsync: 'appwatch -b'
     },
     dependencies: {
+      'caniuse-api': '^2.0.0',
+      'inherits': '^2.0.3',
       'inject-css': '^0.1.1',
-      'react': '^0.14.7',
-      'react-style-prefix': '^0.2.0',
-      'transforms': '^0.1.2',
-      'react-dom': 'benpptung/react-dom',
+      'material-ui': '^0.18.1',
+      'react': '^15.5.4',
       'react-addons-css-transition-group': 'benpptung/react-addons-css-transition-group',
       'react-addons-update': 'benpptung/react-addons-update',
       'react-addons-transition-group': 'benpptung/react-addons-transition-group',
@@ -113,6 +116,10 @@ function createApplication(appname, path, component_name, callback) {
       'react-addons-linked-state-mixin': 'benpptung/react-addons-linked-state-mixin',
       'react-addons-clone-with-props': 'benpptung/react-addons-clone-with-props',
       'react-addons-create-fragment': 'benpptung/react-addons-create-fragment'
+      'react-dom': '^15.5.4',
+      'react-style-prefix': '^0.2.0',
+      "react-tap-event-plugin": "^2.0.1",
+      'transforms': '^0.1.2'
     },
     devDependencies: {
       appstackr: '^0.3.16'
@@ -126,8 +133,11 @@ function createApplication(appname, path, component_name, callback) {
   pkg.devDependencies = sortedObject(pkg.devDependencies);
 
   writefile(join(path, 'package.json'), JSON.stringify(pkg, null, 2));
-  writefile(join(path, 'index.js'), entry);
-  writefile(join(path, 'lib', component_name_lowercase + '.jsx'), lib);
+  writefile(join(path, 'rendering.js'), entry);
+  writefile(join(path, 'index.js'), lib_index)
+  writefile(join(path, 'lib', 'index.js'), component_index);
+  writefile(join(path, 'lib', 'prototype', 'index.js'), lib_proto);
+  writefile(join(path, 'lib', 'prototype', 'life-cycle.js'), lib_life_cycle);
   writefile(join(path, 'lib', 'style', 'styles.js'), styleJS);
   writefile(join(path, 'lib', 'style', 'style.scss'), styleSCSS);
   writefile(join(path, 'lib', 'style', 'images.files'), images);
@@ -137,8 +147,6 @@ function createApplication(appname, path, component_name, callback) {
   writefile(join(path, 'stacks.js'), stacks);
   writefile(join(path, 'appstackr-settings.json'), appstackSettings);
   writefile(join(path, 'examples', 'index.html'), exampleHtml);
-  writefile(join(path, 'examples', 'src',  component_name_lowercase + '.jsx'), exampleJS);
-  writefile(join(path, 'examples', 'src', 'example.scss'), exampleSCSS);
 
   callback(null, path);
 }
