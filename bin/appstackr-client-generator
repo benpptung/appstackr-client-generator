@@ -106,7 +106,6 @@ function createApplication(appname, path, component_name, callback) {
       bsync: 'appwatch -b'
     },
     dependencies: {
-      'caniuse-api': '^1.5.2',
       'inherits': '^2.0.3',
       'inject-css': '^0.1.1',
       'material-ui': '^0.18.1',
@@ -121,11 +120,12 @@ function createApplication(appname, path, component_name, callback) {
       'react-addons-create-fragment': 'benpptung/react-addons-create-fragment',
       'react-dom': '^15.5.4',
       'react-style-prefix': '^0.2.0',
-      "react-tap-event-plugin": "^2.0.1",
-      'transforms': '^0.1.2'
+      "react-tap-event-plugin": "^2.0.1"
     },
     devDependencies: {
-      appstackr: '^0.3.16'
+      'appstackr': 'benpptung/appstackr',
+      'caniuse-api': '^1.5.2',
+      'transforms': '^0.1.2'
     },
     browserify: {
       transform: ['transforms']
