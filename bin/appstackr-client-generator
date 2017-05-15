@@ -123,7 +123,7 @@ function createApplication(appname, path, component_name, callback) {
       "react-tap-event-plugin": "^2.0.1"
     },
     devDependencies: {
-      'appstackr': 'benpptung/appstackr',
+      'appstackr': '^0.3.17',
       'caniuse-api': '^1.5.2',
       'transforms': '^0.1.2'
     },
