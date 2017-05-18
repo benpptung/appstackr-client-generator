@@ -105,6 +105,13 @@ function createApplication(appname, path, component_name, callback) {
       appstack: 'appstack',
       bsync: 'appwatch -b'
     },
+    main: 'index.js',
+    keywords: [],
+    license: 'UNLICENSED',
+    "repository": {
+      "type": "git",
+      "url": ""
+    },
     dependencies: {
       'inherits': '^2.0.3',
       'inject-css': '^0.1.1',
