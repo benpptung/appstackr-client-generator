@@ -1,5 +1,7 @@
 A personal `React` Component starter kit to develop client component with appstackr
 
+Write React class in traditional prototype-based class, and powered by appstackr. Note, `appstackr` is working and tested on Node.js `4.4.3`, so it should have some problems in `Node.js > 4.4.3`.
+
 ### Usage
 
 #####Install appstackr-client-generator globally
