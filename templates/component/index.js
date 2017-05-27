@@ -6,14 +6,14 @@
 const React = require('react');
 const inherits = require('inherits');
 const _proto = require('./prototype');
-const delcss = require('inject-css')(require('./style/style.scss'));
-const styles = require('./style/styles');
+const inject = require('inject-css');
 const files = require('./style/images.files');
 
 
 /**
  * inherits and expose module
  */
+inject(require('./css/index.scss'), {prepend: true});
 inherits({component_name}, React.Component);
 module.exports = {component_name};
 var prototype = Object.assign({component_name}.prototype, _proto);
@@ -32,13 +32,10 @@ function {component_name}(props) {
  */
 prototype.render = function() {
 
-  var containerStyl = styles.container();
-  var containerClass = '{component_name_lowercase}';
-
   return (
 
     /*jshint ignore:start*/
-    <div className={containerClass}>
+    <div>
       <h1>React Starter kit</h1>
       <p>
         Powerful frontend React Component Starter Kit.<br />
