@@ -99,35 +99,39 @@ function createApplication(appname, path, component_name, callback) {
 
   var pkg = {
     name: appname,
+    description: "",
+    author: "",
     version: '0.1.0',
-    scripts: {
-      appstack: 'appstack',
-      bsync: 'appwatch -b'
+    browserify: {
+      transform: ['transforms']
     },
-    main: 'index.js',
+    bugs: {
+      url: ""
+    },
+    dependencies: {},
+    devDependencies: {
+      "appstackr": "^0.3.17",
+      "component-emitter": "^1.2.1",
+      "inherits": "^2.0.3",
+      "inject-css": "^0.1.1",
+      "prop-types": "^15.5.10",
+      "react": "^15.5.4",
+      "react-dom": "^15.5.4",
+      "react-style-prefix": "^0.2.0",
+      "react-tap-event-plugin": "^2.0.1",
+      "transforms": "^0.1.2"
+    },
+    homepage: "",
     keywords: [],
     license: 'UNLICENSED',
-    "repository": {
+    main: 'index.js',
+    repository: {
       "type": "git",
       "url": ""
     },
-    dependencies: {
-      'component-emitter': '^1.2.1',
-      'inherits': '^2.0.3',
-      'inject-css': '^0.1.1',
-      'prop-types': '^15.5.10',
-      'react': '^15.5.4',
-      'react-dom': '^15.5.4',
-      'react-style-prefix': '^0.2.0',
-      "react-tap-event-plugin": "^2.0.1"
-    },
-    devDependencies: {
-      'appstackr': '^0.3.17',
-      'caniuse-api': '^1.5.2',
-      'transforms': '^0.1.2'
-    },
-    browserify: {
-      transform: ['transforms']
+    scripts: {
+      appstack: 'appstack',
+      bsync: 'appwatch -b'
     }
   };
 
