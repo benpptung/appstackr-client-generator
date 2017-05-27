@@ -75,10 +75,9 @@ function createApplication(appname, path, component_name, callback) {
   var lib_proto = loadTemplate(join('component', 'prototype', 'index.js'));
   var lib_life_cycle = loadTemplate(join('component', 'prototype', 'life-cycle.js'));
 
-  var styleJS = loadTemplate(join('component', 'style', 'styles.js'));
-  var styleSCSS = loadTemplate(join('component', 'style', 'style.scss'));
-  var images = loadTemplate(join('component', 'style', 'images.files'));
-  var img = loadFile(join('component', 'style', 'vacation.png'));
+  var styleSCSS = loadTemplate(join('component', 'css', 'index.scss'));
+  var images = loadTemplate(join('component', 'css', 'images.files'));
+  var img = loadFile(join('component', 'css', 'vacation.png'));
   styleSCSS = utils.replace(styleSCSS, '{component_name_lowercase}', component_name_lowercase);
 
   // top level files
@@ -141,10 +140,9 @@ function createApplication(appname, path, component_name, callback) {
   writefile(join(path, 'lib', 'index.js'), component_index);
   writefile(join(path, 'lib', 'prototype', 'index.js'), lib_proto);
   writefile(join(path, 'lib', 'prototype', 'life-cycle.js'), lib_life_cycle);
-  writefile(join(path, 'lib', 'style', 'styles.js'), styleJS);
-  writefile(join(path, 'lib', 'style', 'style.scss'), styleSCSS);
-  writefile(join(path, 'lib', 'style', 'images.files'), images);
-  writefile(join(path, 'lib', 'style', 'img', 'img.png'), img);
+  writefile(join(path, 'lib', 'css', 'index.scss'), styleSCSS);
+  writefile(join(path, 'lib', 'css', 'images.files'), images);
+  writefile(join(path, 'lib', 'css', 'img', 'img.png'), img);
   writefile(join(path, '.gitignore'), gitignore);
   writefile(join(path, '.npmignore'), npmignore);
   writefile(join(path, '.jshintrc'), jshintrc);
