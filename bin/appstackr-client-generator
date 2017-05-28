@@ -117,7 +117,7 @@ function createApplication(appname, path, component_name, callback) {
       "prop-types": "^15.5.10",
       "react": "^15.5.4",
       "react-dom": "^15.5.4",
-      "react-style-prefix": "^0.2.0",
+      "react-style-prefix": "^1.0.1",
       "react-tap-event-plugin": "^2.0.1",
       "transforms": "^0.1.2"
     },
