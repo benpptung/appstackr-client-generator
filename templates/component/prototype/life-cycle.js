@@ -1,6 +1,6 @@
 'use strict';
 
-var prototype = exports.prototype = {};
+const prototype = exports.prototype = {};
 
 /**
  * @protected
