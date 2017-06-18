@@ -157,7 +157,6 @@ function createApplication(appname, path, component_name, callback) {
   writefile(join(path, 'stacks.js'), stacks);
   writefile(join(path, 'appstackr-settings.json'), appstackSettings);
   writefile(join(path, 'examples', 'index.html'), exampleHtml);
-  writefile(join(path, 'site', 'react.js'), react_lib);
   writefile(join(path, 'site', 'react-dom.js'), react_dom_lib);
 
   callback(null, path);
