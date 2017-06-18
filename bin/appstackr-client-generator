@@ -73,7 +73,8 @@ function createApplication(appname, path, component_name, callback) {
   component_index = utils.replace(component_index, '{component_name_lowercase}', component_name_lowercase);
 
   var lib_proto = loadTemplate(join('component', 'prototype', 'index.js'));
-  var lib_life_cycle = loadTemplate(join('component', 'prototype', 'life-cycle.js'));
+  var lib_subscribe = loadTemplate(join('component', 'prototype', 'subscribe.js'));
+  var lib_styles = loadTemplate(join('component', 'prototype', 'styles.js'));
 
   var styleSCSS = loadTemplate(join('component', 'css', 'index.scss'));
   var images = loadTemplate(join('component', 'css', 'images.files'));
@@ -118,10 +119,10 @@ function createApplication(appname, path, component_name, callback) {
       "react-dom": "^15.5.4",
       "react-style-prefix": "^1.0.1",
       "react-tap-event-plugin": "^2.0.1",
-      "transforms": "github:benpptung/transforms"
+      "transforms": "^0.1.4"
     },
     devDependencies: {
-      "appstackr": "^0.3.17"
+      "appstackr": "^0.3.18"
     },
     homepage: "",
     keywords: [],
@@ -142,10 +143,11 @@ function createApplication(appname, path, component_name, callback) {
 
   writefile(join(path, 'package.json'), JSON.stringify(pkg, null, 2));
   writefile(join(path, 'rendering.js'), rendering);
-  writefile(join(path, 'index.js'), lib_index)
+  writefile(join(path, 'index.js'), lib_index);
   writefile(join(path, 'lib', 'index.js'), component_index);
   writefile(join(path, 'lib', 'prototype', 'index.js'), lib_proto);
-  writefile(join(path, 'lib', 'prototype', 'life-cycle.js'), lib_life_cycle);
+  writefile(join(path, 'lib', 'prototype', 'styles.js'), lib_styles);
+  writefile(join(path, 'lib', 'prototype', 'subscribe.js'), lib_subscribe);
   writefile(join(path, 'lib', 'css', 'index.scss'), styleSCSS);
   writefile(join(path, 'lib', 'css', 'images.files'), images);
   writefile(join(path, 'lib', 'css', 'img', 'img.png'), img);

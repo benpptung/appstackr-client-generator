@@ -4,23 +4,23 @@ module.exports = [
     nature: 'js',
     files: [
       'prop-types',
-      'site/react.js',
+      'react',
       'site/react-dom.js'
     ],
     browserify: {
       // Cannot use `*` here, because `*` automatically expose npm module name.
       // In this stack, we have to do some tricks to build react
-      exposes: 'prop-types, react.js:react, react-dom.js:react-dom'
+      exposes: 'prop-types, react, react-dom.js:react-dom'
     }
   },
   {
     name: 'bundle',
     nature: 'js',
     files: [
-      'component-emitter',
+      'inherits',
       'inject-css',
-      'react-style-prefix',
-      'inherits'
+      'component-emitter',
+      'react-style-prefix'
     ],
     browserify: {
       exposes: '*'
@@ -34,8 +34,11 @@ module.exports = [
     browserify: {
       // add React Add-Ons, if this component needs them
       externals: [
-        'prop-types', 'react', 'react-dom', 'inject-css', 'react-style-prefix',
-        'inherits', 'component-emitter'
+        'prop-types', 'react', 'react-dom',
+        'inherits',
+        'inject-css',
+        'component-emitter',
+        'react-style-prefix'
       ]
     }
   }

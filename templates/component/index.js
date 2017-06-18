@@ -5,6 +5,7 @@
  */
 const React = require('react');
 const inherits = require('inherits');
+const is = require('prop-types');
 const _proto = require('./prototype');
 const inject = require('inject-css');
 const files = require('./css/images.files');
@@ -18,12 +19,23 @@ inherits({component_name}, React.Component);
 module.exports = {component_name};
 var prototype = Object.assign({component_name}.prototype, _proto);
 
+{component_name}.defaultProps = {
+
+};
+
+{component_name}.propTypes = {
+
+};
+
 /**
  * @constructor
  */
 function {component_name}(props) {
   React.Component.call(this, props);
   this.state = {};
+
+  this.prepareStyles();
+  this.subscribe();
 }
 
 /**
@@ -48,3 +60,7 @@ prototype.render = function() {
     /*jshint ignore:end*/
   );
 };
+
+if (process.env.NODE_ENV !== 'production') {
+  {component_name}.displayName = '{component_name}';
+}
