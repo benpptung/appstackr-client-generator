@@ -14,9 +14,9 @@ const files = require('./css/images.files');
 /**
  * inherits and expose module
  */
-inject(require('./css/index.scss'), {prepend: true});
 inherits({component_name}, React.Component);
 module.exports = {component_name};
+inject(require('./css/index.scss'), {prepend: true});
 var prototype = Object.assign({component_name}.prototype, _proto);
 
 {component_name}.defaultProps = {
