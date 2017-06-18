@@ -95,7 +95,6 @@ function createApplication(appname, path, component_name, callback) {
   exampleHtml = utils.replace(exampleHtml, '{component_name_lowercase}', component_name_lowercase);
 
   // react adapter
-  var react_lib = loadTemplate(join('site', 'react.js'));
   var react_dom_lib = loadTemplate(join('site', 'react-dom.js'));
 
   var pkg = {
